@@ -25,6 +25,10 @@ class Scout(map: Map) extends Mobile(map: Map) {
   override val letter = 'S'
 }
 
+// LONER
+//
+// If there is room adjacent to him he moves there, otherwise he moves in a random direction
+
 class Loner(map: Map) extends Mobile(map: Map) {
   code = new If(Alone,
       Nop, 
