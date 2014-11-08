@@ -14,10 +14,13 @@ import no.aileron.Direction._
 
 class Go (direction: Direction) extends Code {
 	override def execute(mobile: Mobile) = {
-		if (direction == North && mobile.y < mobile.map.maxY) mobile.y += 1
-		if (direction == South && mobile.y > mobile.map.minY) mobile.y -= 1
-		if (direction == East && mobile.x < mobile.map.maxX) mobile.x += 1
-		if (direction == West && mobile.x > mobile.map.minX) mobile.x -= 1
+		val d = if (direction == Random) {
+		  Direction(scala.util.Random.nextInt(4))
+		} else direction 
+		if (d == North && mobile.y < mobile.map.maxY) mobile.y += 1
+		if (d == South && mobile.y > mobile.map.minY) mobile.y -= 1
+		if (d == East && mobile.x < mobile.map.maxX) mobile.x += 1
+		if (d == West && mobile.x > mobile.map.minX) mobile.x -= 1
 	}
 }
 

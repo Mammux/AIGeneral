@@ -25,7 +25,22 @@ class Map {
 	
 	def tick {
 	  mobiles foreach {
-	    m: Mobile => m.execute ; println (m.name, m.x,  m.y)
+	    m: Mobile => m.execute
 	  }
+	}
+	
+	def dump {
+	  var canvas = ""
+	  for (x <- minX to maxX) {
+	    for (y <- minY to maxY) {
+	      mobiles.filter(m => m.x == x && m.y == y) match {
+	        case m :: Nil => canvas = canvas + m.letter
+	        case m :: _ => canvas = canvas + "*"
+	        case Nil => canvas = canvas + '.'
+	      }
+	    }
+	    canvas = canvas + "\n"
+	  }
+	  println(canvas)
 	}
 }

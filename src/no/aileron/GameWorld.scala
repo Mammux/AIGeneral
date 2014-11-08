@@ -3,13 +3,11 @@ package no.aileron
 object GameWorld extends App {
 	override def main(args: Array[String]) {
 		val map = new Map
-		new Scout(map)
-		new Scout(map)
-		new Scout(map)
-		map.tick
-		println("--")
-		map.tick
-		println("--")
-		map.tick
+		for (i <- 1 to 30)
+			new Loner(map)
+		for (i <- 1 to 5) {
+			map.tick
+		}
+		map.dump
 	}
 }
