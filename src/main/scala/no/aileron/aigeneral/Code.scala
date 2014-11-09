@@ -1,10 +1,12 @@
-package no.aileron
+package no.aileron.aigeneral
 
 import javax.script.ScriptEngineManager
 
 // CODES
 //
 // Stuff that mobiles can do
+
+/*
 
 abstract class Code {
   def execute(mobile: Mobile)
@@ -28,7 +30,7 @@ class LuaCode(sem: ScriptEngineManager, script: String) extends Code {
 
 // Move the mobile
 
-import no.aileron.Direction._
+import no.aileron.aigeneral.Direction._
 
 class Go (direction: Direction) extends Code {
 	override def execute(mobile: Mobile) = {
@@ -89,3 +91,4 @@ object Terminate extends Code {
   }
 }
 
+*/

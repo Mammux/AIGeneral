@@ -1,10 +1,11 @@
-package no.aileron
+package no.aileron.aigeneral
 
-import no.aileron.Direction._
+import Direction._
 
 // EXPRESSIONS
 //
 // Used inside code, always evaluate to true or false
+/*
 
 abstract class Expression {
   def result(mobile: Mobile): Boolean
@@ -69,4 +70,4 @@ class ScriptWorld(mobile: Mobile) {
   def room(dir: Direction) = new Room(dir).result(mobile)
 }
 
-
+*/

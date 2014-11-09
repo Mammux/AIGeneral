@@ -1,4 +1,4 @@
-package no.aileron
+package no.aileron.aigeneral
 
 object Direction extends Enumeration {
   type Direction = Value

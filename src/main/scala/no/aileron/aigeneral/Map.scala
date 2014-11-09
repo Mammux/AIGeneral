@@ -1,7 +1,12 @@
-package no.aileron
+package no.aileron.aigeneral
 
 import java.util.ArrayList
 import scala.collection.JavaConversions._
+import akka.actor.Actor
+import akka.event.Logging
+import akka.actor.ActorLogging
+import akka.persistence.EventsourcedProcessor
+
 
 class Map {
 	var minX = -5
@@ -23,12 +28,6 @@ class Map {
 	  mobiles = mobiles diff List(mobile)
 	}
 	
-	def tick {
-	  mobiles foreach {
-	    m: Mobile => m.execute
-	  }
-	}
-	
 	def dump {
 	  var canvas = ""
 	  for (y <- minY to maxY) {
@@ -44,3 +43,4 @@ class Map {
 	  println(canvas)
 	}
 }
+
