@@ -31,8 +31,8 @@ class Map {
 	
 	def dump {
 	  var canvas = ""
-	  for (x <- minX to maxX) {
-	    for (y <- minY to maxY) {
+	  for (y <- minY to maxY) {
+	    for (x <- minX to maxX) {
 	      mobiles.filter(m => m.x == x && m.y == y) match {
 	        case m :: Nil => canvas = canvas + m.letter
 	        case m :: _ => canvas = canvas + "*"

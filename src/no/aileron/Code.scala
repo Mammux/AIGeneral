@@ -1,11 +1,29 @@
 package no.aileron
 
+import javax.script.ScriptEngineManager
+
 // CODES
 //
 // Stuff that mobiles can do
 
 abstract class Code {
-  def execute(mobile: Mobile) = {}
+  def execute(mobile: Mobile)
+}
+
+// LUA CODE
+
+class LuaCode(sem: ScriptEngineManager, script: String) extends Code {
+  
+  val e = sem.getEngineByName("luaj")
+  
+  override def execute(mobile: Mobile) = {
+    e.put("mobile", mobile)
+    e.put("world", new ScriptWorld(mobile))
+    e.put("east", Direction.East)
+    e.put("west", Direction.West)
+    println("eval", e.eval(script))
+    println("res",e.get("res"))
+  }
 }
 
 // Move the mobile
@@ -40,7 +58,9 @@ class If (ifExpr: Expression, thenCode: Code, elseCode: Code) extends Code {
 
 // Do nothing
 
-object Nop extends Code
+object Nop extends Code {
+    override def execute(mobile: Mobile) = {}
+}
 
 // Change the code in another mobile, with the specified name, in the same space
 

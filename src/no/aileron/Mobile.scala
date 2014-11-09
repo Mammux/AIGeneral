@@ -1,6 +1,7 @@
 package no.aileron
 
 import no.aileron.Direction._
+import javax.script.ScriptEngineManager
 
 abstract class Mobile(m: Map) {
   var x = 0
@@ -11,6 +12,15 @@ abstract class Mobile(m: Map) {
   def execute = {code.execute(this)}
   def name: String
   def letter: Char
+  
+  def goEast = {x = x + 1}
+}
+
+class LuaMobile(m: Map, sem: ScriptEngineManager, script: String) extends Mobile(m: Map) {
+  code = new LuaCode(sem, script)
+  map.addMobile(this)
+  override val name = "Lua"
+  override val letter = 'U'
 }
 
 // SCOUT

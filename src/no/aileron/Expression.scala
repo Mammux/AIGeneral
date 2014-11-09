@@ -61,6 +61,12 @@ class Not(first: Expression) extends Expression {
   override def result(mobile: Mobile): Boolean = ! first.result(mobile)
 }
 
+// SCRIPT expressions
 
+class ScriptWorld(mobile: Mobile) {
+  def alone = Alone.result(mobile)
+  def home = Home.result(mobile)
+  def room(dir: Direction) = new Room(dir).result(mobile)
+}
 
 
