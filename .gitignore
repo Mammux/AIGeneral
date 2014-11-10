@@ -1,3 +1,7 @@
 /bin
-/target/
 /journal/
+target/
+.cache
+.classpath
+.project
+.settings
