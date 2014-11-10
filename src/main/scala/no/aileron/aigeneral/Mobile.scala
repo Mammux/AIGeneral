@@ -6,6 +6,7 @@ import akka.actor.ActorRef
 import akka.actor.ActorLogging
 import akka.persistence.EventsourcedProcessor
 import scala.NotImplementedError
+import akka.persistence.RecoveryCompleted
 
 case object Activated
 
@@ -21,44 +22,50 @@ abstract class MobileActor extends EventsourcedProcessor with ActorLogging with 
   var x = 0
   var y = 0
   var id: Long = 0
+  var recovered = false
     
   def receiveRecover = {
     
     case Added(myId: Long) => {
-      log.info("recover Added")
+      log.info(s"recover Added: $myId")
       id = myId
     }
     
     case Moved(x: Int, y: Int) => {
-      log.info("recover Moved")
+      log.info(s"recover Moved ($x,$y)")
       this.x = x
       this.y = y 
     }
     
+    case RecoveryCompleted => recovered = true
+    
+    /*
     case Activated => {
       log.info("recover Activated")
-      sender ! AddMobile(this)
+      sender ! AddMobile(letter)
     }
+    */
     
     case o: Object => log.info(s"received unknown recover message: $o")
   }
   
   def receiveCommand = {
     
-    case Added(myId: Long) => {
-      log.info("Added")
+    case Added(myId: Long) => persist(Added(myId)) { event =>
+      log.info(s"Added: $myId")
       id = myId
     }
     
     case Moved(x: Int, y: Int) => {
-      log.info("Moved")
+      log.info(s"Moved ($x,$y)")
       this.x = x
       this.y = y 
     }
     
     case Activated => {
       log.info("Activated")
-      sender ! AddMobile(this)
+      if (!recovered)
+    	  sender ! AddMobile(letter)
     }
     
     case o: Object => log.info(s"received unknown message: $o")

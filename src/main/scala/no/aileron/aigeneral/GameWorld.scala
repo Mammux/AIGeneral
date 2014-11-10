@@ -22,8 +22,10 @@ object GameWorld extends App {
 	  
 	  val system = ActorSystem("aigeneral")
 	  val mapActor = system.actorOf(Props(classOf[MapActor]), "map")
-	  val dumbActor = system.actorOf(Props(classOf[DumbMobile]), "dumb")
-	  dumbActor.tell(Activated, mapActor)
+	  val dumbActor1 = system.actorOf(Props(classOf[DumbMobile]), "dumb1")
+	  val dumbActor2 = system.actorOf(Props(classOf[DumbMobile]), "dumb2")
+	  dumbActor1.tell(Activated, mapActor)
+	  dumbActor2.tell(Activated, mapActor)
  
 	}
 }

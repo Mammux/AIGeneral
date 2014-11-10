@@ -6,7 +6,10 @@ import akka.actor.Actor
 import akka.event.Logging
 import akka.actor.ActorLogging
 import akka.persistence.EventsourcedProcessor
+import akka.actor.ActorRef
 
+
+case class MobileData(letter: Char, x: Int, y: Int, actor: ActorRef)
 
 class Map {
 	var minX = -5
@@ -16,23 +19,25 @@ class Map {
 	var origoX = 0
 	var origoY = 0
   
-	var mobiles = List[Mobile]()
+	var mobiles = Map[Long,MobileData]()
+	var nextId: Long = 0
 	
-	def addMobile(mobile: Mobile) {
-	  mobiles = mobile :: mobiles
-	  mobile.x = origoX
-	  mobile.y = origoY
+	def addMobile(mobile: MobileData): Long = {
+	  val id = nextId
+	  mobiles = mobiles + (id -> mobile)
+	  nextId = nextId + 1
+	  return id
 	}
 	
-	def removeMobile(mobile: Mobile) {
-	  mobiles = mobiles diff List(mobile)
+	def removeMobile(id: Long) {
+	  mobiles = mobiles - id
 	}
 	
 	def dump {
 	  var canvas = ""
 	  for (y <- minY to maxY) {
 	    for (x <- minX to maxX) {
-	      mobiles.filter(m => m.x == x && m.y == y) match {
+	      mobiles.values.filter(m => m.x == x && m.y == y) match {
 	        case m :: Nil => canvas = canvas + m.letter
 	        case m :: _ => canvas = canvas + "*"
 	        case Nil => canvas = canvas + '.'
